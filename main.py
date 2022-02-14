@@ -44,25 +44,25 @@ def get_image():
     return x
 
 ########################################################################################################################
-def listToString(s): 
-    
+def listToString(s):
+
     # initialize an empty string
-    str1 = "" 
-    
-    # traverse in the string  
-    for ele in s: 
+    str1 = ""
+
+    # traverse in the string
+    for ele in s:
         str1 += ele + " "
-    
-    # return string  
-    return str1 
+
+    # return string
+    return str1
 
 ########################################################################################################################
 def prepare_html_output(image, copyright, explanation, title):
 
     text = title
-    
+
     text += '''
-    
+
     '''
 
     explanation = list(explanation.split(" "))
@@ -74,7 +74,7 @@ def prepare_html_output(image, copyright, explanation, title):
     text +=  explanation
 
     text += '''
-    
+
     '''
 
     text += 'copyright ' + copyright
@@ -100,7 +100,6 @@ def prepare_html_output(image, copyright, explanation, title):
     doc.to_html()
     doc.html = style + doc.html
     doc.html += '</html'
-    # doc.add_css("styling.css")
 
     return doc.html
 
@@ -113,27 +112,7 @@ def compute():
     image_bytes = io.BytesIO(response.content)
     image_bytes = base64.b64encode(image_bytes.getvalue()).decode("utf-8").replace("\n", "")
 
-    # copyright = " "
-    # title = " "
-    # explanation = " "   
-
-    # if image.has_key('copyright'):
-    #     copyright = image['copyright']
-    # else:
-    #     copyright = " "
-
-    # if image.has_key('title'):
-    #     title = image['title']
-    # else:
-    #     title = " "
-
-    # if mage.has_key('explanation'):
-    #     explanation = image['explanation']
-    # else:
-    #     explanation = " "
-
-# `   output = prepare_html_output(image_bytes, copyright, explanation, title)
-    output = prepare_html_output(image_bytes, "", image['explanation'], image['title'])        
+    output = prepare_html_output(image_bytes, "", image['explanation'], image['title'])
 
     return [{'typpppe': 'html', 'label': 'Today', 'data': output}]
 
