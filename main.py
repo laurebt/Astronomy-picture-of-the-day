@@ -114,7 +114,7 @@ def compute():
 
     output = prepare_html_output(image_bytes, "", image['explanation'], image['title'])
 
-    return [{'typpppe': 'html', 'label': 'Today', 'data': output}]
+    return [{'type': 'html', 'label': 'Today', 'data': output}]
 
 
 ########################################################################################################################
