@@ -37,7 +37,7 @@ class HTMLDoc:
 		self.html = md.markdown(self.markdown)
 
 ########################################################################################################################
-def get_image():
+def _get_image():
 
     complete_url = 'https://api.nasa.gov/planetary/apod?api_key=82hVmJIh2CbJrwJoltzhCduMVnzCDpIyhFWmqcIY'
     response = requests.get(complete_url)
@@ -46,7 +46,7 @@ def get_image():
     return x
 
 ########################################################################################################################
-def listToString(s):
+def _listToString(s):
 
     # initialize an empty string
     str1 = ""
@@ -59,7 +59,7 @@ def listToString(s):
     return str1
 
 ########################################################################################################################
-def prepare_html_output(image, copyright, explanation, title):
+def _prepare_html_output(image, copyright, explanation, title):
 
     text = title
 
@@ -71,7 +71,7 @@ def prepare_html_output(image, copyright, explanation, title):
     for i in range(0, len(explanation)):
         if (i%10) == 0:
             explanation.insert(i, "\n")
-    explanation = listToString(explanation)
+    explanation = _listToString(explanation)
 
     text +=  explanation
 
@@ -108,17 +108,17 @@ def prepare_html_output(image, copyright, explanation, title):
 ########################################################################################################################
 def compute():
 
-    image = get_image()
+    image = _get_image()
 
     response = requests.get(image['url'])
     image_bytes = io.BytesIO(response.content)
     image_bytes = base64.b64encode(image_bytes.getvalue()).decode("utf-8").replace("\n", "")
 
-    output = prepare_html_output(image_bytes, "", image['explanation'], image['title'])
+    output = _prepare_html_output(image_bytes, "", image['explanation'], image['title'])
 
     return [{'type': 'html', 'label': 'Today', 'data': output}]
 
 
 ########################################################################################################################
-def schema():
+def _schema():
     return []
