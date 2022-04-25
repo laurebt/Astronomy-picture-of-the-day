@@ -1,1 +1,1 @@
-# Astronomy-picture-of-the-day
+# Astronomy picture of the day
