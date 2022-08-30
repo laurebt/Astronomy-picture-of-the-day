@@ -9,6 +9,10 @@ import requests, json
 import markdown as md
 import io
 
+import os
+
+my_key = os.environ["MY_NASA_KEY"]
+
 ########################################################################################################################
 class HTMLDoc:
 
@@ -41,7 +45,7 @@ class HTMLDoc:
 ########################################################################################################################
 def _get_image():
 
-    complete_url = 'https://api.nasa.gov/planetary/apod?api_key=82hVmJIh2CbJrwJoltzhCduMVnzCDpIyhFWmqcIY'
+    complete_url = 'https://api.nasa.gov/planetary/apod?api_key=' + my_key
     response = requests.get(complete_url)
     x = response.json()
 
