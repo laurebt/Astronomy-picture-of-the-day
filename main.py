@@ -12,7 +12,7 @@ import os
 import streamlit as st
 
 test = os.environ
-my_key = os.environ["MY_NASA_KEY"]
+# my_key = os.environ["MY_NASA_KEY"]
 
 ########################################################################################################################
 class HTMLDoc:
@@ -46,8 +46,8 @@ class HTMLDoc:
 ########################################################################################################################
 def __get_image__():
 
-	complete_url = 'https://api.nasa.gov/planetary/apod?api_key=' + my_key
-	# complete_url = 'https://api.nasa.gov/planetary/apod?api_key=82hVmJIh2CbJrwJoltzhCduMVnzCDpIyhFWmqcIY'
+# 	complete_url = 'https://api.nasa.gov/planetary/apod?api_key=' + my_key
+	complete_url = 'https://api.nasa.gov/planetary/apod?api_key=82hVmJIh2CbJrwJoltzhCduMVnzCDpIyhFWmqcIY'
 
 	response = requests.get(complete_url)
 	x = response.json()
