@@ -46,7 +46,6 @@ class HTMLDoc:
 def __get_image__():
 
 	complete_url = 'https://api.nasa.gov/planetary/apod?api_key=' + my_key
-# 	complete_url = 'https://api.nasa.gov/planetary/apod?api_key=82hVmJIh2CbJrwJoltzhCduMVnzCDpIyhFWmqcIY'
 
 	response = requests.get(complete_url)
 	x = response.json()
@@ -116,8 +115,6 @@ def __prepare_html_output__(image, copyright, explanation, title):
 ########################################################################################################################
 def compute():
 
-	st.write(os.environ)
-	
 	st.title("NASA's Astronomy Picture of the Day")
 	st.markdown("""Every day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional astronomer.""")
 
