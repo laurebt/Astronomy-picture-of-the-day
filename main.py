@@ -117,11 +117,11 @@ def __prepare_html_output__(image, copyright, explanation, title):
 ########################################################################################################################
 def compute():
 
+	st.text(print(os.environ))
+	
 	st.title("NASA's Astronomy Picture of the Day")
 	st.markdown("""Every day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional astronomer.""")
 
-	st.text(print(os.environ))
-	
 	image = __get_image__()
 
 	response = requests.get(image['url'])
