@@ -8,10 +8,10 @@ import base64
 import requests, json
 import markdown as md
 import io
-
 import os
+import streamlit as st
 
-my_key = os.environ["MY_NASA_KEY"]
+# my_key = os.environ["MY_NASA_KEY"]
 
 ########################################################################################################################
 class HTMLDoc:
@@ -43,88 +43,95 @@ class HTMLDoc:
 		self.html = md.markdown(self.markdown)
 
 ########################################################################################################################
-def _get_image():
+def __get_image__():
 
-    complete_url = 'https://api.nasa.gov/planetary/apod?api_key=' + my_key
-    response = requests.get(complete_url)
-    x = response.json()
+	# complete_url = 'https://api.nasa.gov/planetary/apod?api_key=' + my_key
+	complete_url = 'https://api.nasa.gov/planetary/apod?api_key=82hVmJIh2CbJrwJoltzhCduMVnzCDpIyhFWmqcIY'
 
-    return x
+	response = requests.get(complete_url)
+	x = response.json()
 
-########################################################################################################################
-def _listToString(s):
-
-    # initialize an empty string
-    str1 = ""
-
-    # traverse in the string
-    for ele in s:
-        str1 += ele + " "
-
-    # return string
-    return str1
+	return x
 
 ########################################################################################################################
-def _prepare_html_output(image, copyright, explanation, title):
+def __listToString__(s):
 
-    text = title
+	# initialize an empty string
+	str1 = ""
 
-    text += '''
+	# traverse in the string
+	for ele in s:
+		str1 += ele + " "
 
-    '''
+	# return string
+	return str1
 
-    explanation = list(explanation.split(" "))
-    for i in range(0, len(explanation)):
-        if (i%10) == 0:
-            explanation.insert(i, "\n")
-    explanation = _listToString(explanation)
+########################################################################################################################
+def __prepare_html_output__(image, copyright, explanation, title):
 
-    text +=  explanation
+	text = title
 
-    text += '''
+	text += '''
 
-    '''
+	'''
 
-    text += 'copyright ' + copyright
+	explanation = list(explanation.split(" "))
+	for i in range(0, len(explanation)):
+		if (i%10) == 0:
+			explanation.insert(i, "\n")
+	explanation = __listToString__(explanation)
 
-    style = '''<html><head>
-            <style>
-                * {
-                font-family: 'Roboto', sans-serif;
-                }
-                h1 {
-                text-align: center;
-                }
-                p {
-                text-align: left;
-                }
-            </style>
-            </head>
-            '''
+	text +=  explanation
 
-    doc = HTMLDoc()
-    doc.add_text(text)
-    doc.add_bytestring_image(image)
-    doc.to_html()
-    doc.html = style + doc.html
-    doc.html += '</html'
+	text += '''
 
-    return doc.html
+	'''
+
+	text += 'copyright ' + copyright
+
+	style = '''<html><head>
+			<style>
+				* {
+				font-family: 'Roboto', sans-serif;
+				}
+				h1 {
+				text-align: center;
+				}
+				p {
+				text-align: left;
+				}
+			</style>
+			</head>
+			'''
+
+	doc = HTMLDoc()
+	doc.add_text(text)
+	doc.add_bytestring_image(image)
+	doc.to_html()
+	doc.html = style + doc.html
+	doc.html += '</html'
+
+	return doc.html
 
 ########################################################################################################################
 def compute():
 
-    image = _get_image()
+	image = __get_image__()
 
-    response = requests.get(image['url'])
-    image_bytes = io.BytesIO(response.content)
-    image_bytes = base64.b64encode(image_bytes.getvalue()).decode("utf-8").replace("\n", "")
+	response = requests.get(image['url'])
+	image_bytes = io.BytesIO(response.content)
+	image_bytes = base64.b64encode(image_bytes.getvalue()).decode("utf-8").replace("\n", "")
 
-    output = _prepare_html_output(image_bytes, "", image['explanation'], image['title'])
+	output = __prepare_html_output__(image_bytes, "", image['explanation'], image['title'])
 
-    return [{'type': 'html', 'label': 'Today', 'data': output}]
+	return output
 
+#######################################################
+if __name__ == '__main__':
 
-########################################################################################################################
-def _schema():
-    return []
+		st.title("NASA's Astronomy Picture of the Day")
+		st.markdown("""Every day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional astronomer.""")
+
+		output = compute()
+
+		st.markdown(output, unsafe_allow_html=True)
