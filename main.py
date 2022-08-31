@@ -11,6 +11,7 @@ import io
 import os
 import streamlit as st
 
+test = os.environ
 my_key = os.environ["MY_NASA_KEY"]
 
 ########################################################################################################################
@@ -119,6 +120,8 @@ def compute():
 	st.title("NASA's Astronomy Picture of the Day")
 	st.markdown("""Every day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional astronomer.""")
 
+	st.text(print(os.environ))
+	
 	image = __get_image__()
 
 	response = requests.get(image['url'])
