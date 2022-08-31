@@ -116,6 +116,9 @@ def __prepare_html_output__(image, copyright, explanation, title):
 ########################################################################################################################
 def compute():
 
+	st.title("NASA's Astronomy Picture of the Day")
+	st.markdown("""Every day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional astronomer.""")
+
 	image = __get_image__()
 
 	response = requests.get(image['url'])
@@ -124,14 +127,9 @@ def compute():
 
 	output = __prepare_html_output__(image_bytes, "", image['explanation'], image['title'])
 
-	return output
+	st.markdown(output, unsafe_allow_html=True)
 
 #######################################################
 if __name__ == '__main__':
 
-		st.title("NASA's Astronomy Picture of the Day")
-		st.markdown("""Every day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional astronomer.""")
-
-		output = compute()
-
-		st.markdown(output, unsafe_allow_html=True)
+	compute()
